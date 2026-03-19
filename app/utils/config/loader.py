@@ -26,12 +26,14 @@ _DEFAULTS = {
         "vocab_path": "../recorder/data/processed/label_map.json",
         "device": "cuda",
         "window_duration": 3.0,
+        "window_overlap": 0.5,
         "inference_interval": 0.5,
     },
     "preprocessing": {
-        "smoothing_window": 5,
         "spatial_normalization": True,
         "scale_normalization": True,
+        "coordinate_normalization": True,
+        "sensor_range_mm": 500.0,
     },
     "ui": {
         "window_width": 1200,

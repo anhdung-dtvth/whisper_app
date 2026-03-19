@@ -35,18 +35,23 @@ class AppController:
         pre = config["preprocessing"]
 
         fps = hw.get("target_fps", 60)
-        buffer_duration = hw.get("buffer_duration", 2.0)
-        max_frames = int(buffer_duration * fps)
+        window_duration = float(mdl.get("window_duration", 3.0))
+        self._window_frames = max(1, int(window_duration * fps))
+        self._window_overlap = float(mdl.get("window_overlap", 0.5))
+
+        buffer_duration = float(hw.get("buffer_duration", window_duration))
+        max_frames = max(int(buffer_duration * fps), self._window_frames)
 
         # Frame buffer
         self._buffer = FrameBuffer(max_frames=max_frames, fps=fps)
 
         # Preprocessor
         self._preprocessor = RealTimePreprocessor(
-            smoothing_window=pre.get("smoothing_window", 5),
             spatial_normalization=pre.get("spatial_normalization", True),
             scale_normalization=pre.get("scale_normalization", True),
             fps=fps,
+            coordinate_normalization=pre.get("coordinate_normalization", True),
+            sensor_range_mm=pre.get("sensor_range_mm", 500.0),
         )
 
         # Inference service
@@ -156,7 +161,10 @@ class AppController:
         Called by inference thread to get preprocessed data.
         Returns (features, length).
         """
-        data, length = self._buffer.get_window()
+        data, length = self._buffer.get_sliding_window(
+            window_frames=self._window_frames,
+            overlap=self._window_overlap,
+        )
         if length > 0:
             data, length = self._preprocessor.process(data, length)
         return data, length
