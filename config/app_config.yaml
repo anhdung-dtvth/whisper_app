@@ -1,0 +1,29 @@
+# WhisperApp Configuration
+
+hardware:
+  device: "leap_motion"
+  target_fps: 60
+  buffer_duration: 3.0  # seconds — must match data.window_duration in Whisper_modification config
+
+model:
+  checkpoint_path: "../../Whisper_modification/checkpoints/final_model.pt"
+  vocab_path: "./label_map.json"
+  device: "cuda"  # or "cpu"
+  window_duration: 3.0  # seconds — matches data.window_duration in Whisper_modification config
+  inference_interval: 0.5
+
+preprocessing:
+  smoothing_window: 5
+  spatial_normalization: true
+  scale_normalization: true
+
+ui:
+  window_width: 1200
+  window_height: 800
+  visualization_fps: 30
+  show_skeleton: true
+  show_confidence: true
+
+logging:
+  level: "INFO"
+  file: "logs/app.log"

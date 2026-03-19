@@ -1,0 +1,7 @@
+PyQt5>=5.15
+opencv-python>=4.5
+numpy>=1.21
+pyyaml>=6.0
+torch>=2.0
+scipy>=1.10.0
+scikit-learn>=1.2.0

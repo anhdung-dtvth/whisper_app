@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "WhisperLMCVSL",
+			"path": "../../.."
+		},
+		{
+			"name": "leapc-python-api",
+			"path": "D:/Test/leapc-python-bindings/leapc-python-api"
+		}
+	],
+	"settings": {}
+}

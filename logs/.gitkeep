@@ -1,0 +1,71 @@
+whisper_app/
+├── app/
+│   ├── core/          # Core business logic
+│   ├── hardware/      # Leap Motion integration
+│   ├── services/      # AI model service, streaming service
+│   ├── ui/            # GUI components
+│   └── utils/         # Helper functions
+├── assets/            # Resources (fonts, icons, styles)
+├── config/            # Configuration files
+└── scripts/           # Setup, deployment scripts
+
+whisper_app/
+├── app/
+│   ├── hardware/
+│   │   ├── __init__.py
+│   │   ├── base.py              # ← Step 1
+│   │   ├── leap_controller.py   # ← Step 2
+│   │   └── mock_controller.py   # ← Step 3
+│   ├── services/
+│   │   ├── __init__.py
+│   │   └── model_service.py     # ← Step 4
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── preprocessing.py     # ← Step 5
+│   │   └── buffer.py            # ← Step 6
+│   └── ui/
+│       ├── __init__.py
+│       └── main_window.py       # ← Step 7
+# WhisperApp Architecture
+
+## System Overview
+```
+User Hand Gestures
+    ↓
+Leap Motion Controller (120 FPS)
+    ↓
+Hardware Layer (app/hardware/)
+    ↓
+Preprocessing Pipeline (app/core/preprocessing.py)
+    ↓
+AI Service (app/services/model_service.py)
+    ↓
+UI Layer (app/ui/)
+    ↓
+Display Recognition Results
+```
+
+## Module Responsibilities
+
+### 1. `app/hardware/`
+- **leap_controller.py**: Interface with Leap Motion SDK
+- **stream_manager.py**: Manage real-time data stream
+
+### 2. `app/core/`
+- **preprocessing.py**: Normalize, smooth skeletal data
+- **buffer.py**: Circular buffer for streaming data
+- **config.py**: App configuration management
+
+### 3. `app/services/`
+- **model_service.py**: Load & run WhisperSign model
+- **inference_service.py**: Handle batch/streaming inference
+- **result_manager.py**: Post-process predictions
+
+### 4. `app/ui/`
+- **main_window.py**: Main GUI window
+- **visualization.py**: Real-time skeleton visualization
+- **controls.py**: Start/stop, settings buttons
+
+### 5. `app/utils/`
+- **logger.py**: Logging utility
+- **metrics.py**: Performance monitoring
